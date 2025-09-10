@@ -1,0 +1,605 @@
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> create database emp;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| emp                |
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use emp;
+Database changed
+mysql> create table employee(
+    -> name varchar(45),
+    -> id int not null primary key,
+    -> address varchar(50),
+    -> marks int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(45) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into employee (id,name,address,marks) values (1,'Ram','Hyd',75);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+----+---------+-------+
+| name | id | address | marks |
++------+----+---------+-------+
+| Ram  |  1 | Hyd     |    75 |
++------+----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into employee values('Sayam',2,'Delhi',90);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values('Yam',3,'Pune',80);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values('Kamran',4,'Mumbai',70),('Anmol',5,'Bng',95);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+-------+
+| name   | id | address | marks |
++--------+----+---------+-------+
+| Ram    |  1 | Hyd     |    75 |
+| Sayam  |  2 | Delhi   |    90 |
+| Yam    |  3 | Pune    |    80 |
+| Kamran |  4 | Mumbai  |    70 |
+| Anmol  |  5 | Bng     |    95 |
++--------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select name from employee;
++--------+
+| name   |
++--------+
+| Ram    |
+| Sayam  |
+| Yam    |
+| Kamran |
+| Anmol  |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select name,id from employee;
++--------+----+
+| name   | id |
++--------+----+
+| Ram    |  1 |
+| Sayam  |  2 |
+| Yam    |  3 |
+| Kamran |  4 |
+| Anmol  |  5 |
++--------+----+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where id = 5;
++-------+----+---------+-------+
+| name  | id | address | marks |
++-------+----+---------+-------+
+| Anmol |  5 | Bng     |    95 |
++-------+----+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> update employee set address = 'Chennai' where id = 3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+-------+
+| name   | id | address | marks |
++--------+----+---------+-------+
+| Ram    |  1 | Hyd     |    75 |
+| Sayam  |  2 | Delhi   |    90 |
+| Yam    |  3 | Chennai |    80 |
+| Kamran |  4 | Mumbai  |    70 |
+| Anmol  |  5 | Bng     |    95 |
++--------+----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee add income int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+-------+--------+
+| name   | id | address | marks | income |
++--------+----+---------+-------+--------+
+| Ram    |  1 | Hyd     |    75 |   NULL |
+| Sayam  |  2 | Delhi   |    90 |   NULL |
+| Yam    |  3 | Chennai |    80 |   NULL |
+| Kamran |  4 | Mumbai  |    70 |   NULL |
+| Anmol  |  5 | Bng     |    95 |   NULL |
++--------+----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set income = 30000;
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+-------+--------+
+| name   | id | address | marks | income |
++--------+----+---------+-------+--------+
+| Ram    |  1 | Hyd     |    75 |  30000 |
+| Sayam  |  2 | Delhi   |    90 |  30000 |
+| Yam    |  3 | Chennai |    80 |  30000 |
+| Kamran |  4 | Mumbai  |    70 |  30000 |
+| Anmol  |  5 | Bng     |    95 |  30000 |
++--------+----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set income = 50000 where id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+-------+--------+
+| name   | id | address | marks | income |
++--------+----+---------+-------+--------+
+| Ram    |  1 | Hyd     |    75 |  50000 |
+| Sayam  |  2 | Delhi   |    90 |  30000 |
+| Yam    |  3 | Chennai |    80 |  30000 |
+| Kamran |  4 | Mumbai  |    70 |  30000 |
+| Anmol  |  5 | Bng     |    95 |  30000 |
++--------+----+---------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(45) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| income  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee modify column address varchar(60);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(45) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(60) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| income  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee drop column marks;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  30000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  30000 |
++--------+----+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into employee values('Voda',6,'Puna',60000),('Rama',7,'Delhi',40000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  30000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  30000 |
+| Voda   |  6 | Puna    |  60000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> delete from employee where name = 'Voda';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  30000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  30000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select sum(income) from employee;
++-------------+
+| sum(income) |
++-------------+
+|      210000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> update employee set income = 35000 where id = 3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set income = 25000 where id = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  25000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select sum(income) from employee;
++-------------+
+| sum(income) |
++-------------+
+|      210000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(income) from employee;
++-------------+
+| avg(income) |
++-------------+
+|  35000.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name) from employee;
++-------------+
+| count(name) |
++-------------+
+|           6 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(income) from employee;
++-------------+
+| max(income) |
++-------------+
+|       50000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(income) from employee;
++-------------+
+| min(income) |
++-------------+
+|       25000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee order by income;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Anmol  |  5 | Bng     |  25000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Rama   |  7 | Delhi   |  40000 |
+| Ram    |  1 | Hyd     |  50000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee order by income desc;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Rama   |  7 | Delhi   |  40000 |
+| Yam    |  3 | Chennai |  35000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  25000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee where name like 'a%';
++-------+----+---------+--------+
+| name  | id | address | income |
++-------+----+---------+--------+
+| Anmol |  5 | Bng     |  25000 |
++-------+----+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where name like '%m';
++-------+----+---------+--------+
+| name  | id | address | income |
++-------+----+---------+--------+
+| Ram   |  1 | Hyd     |  50000 |
+| Sayam |  2 | Delhi   |  30000 |
+| Yam   |  3 | Chennai |  35000 |
++-------+----+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee where name like '_a%';
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where name like '_a';
+Empty set (0.00 sec)
+
+mysql> select * from employee where name like '__a';
+Empty set (0.00 sec)
+
+mysql> select * from employee where name like '___a%';
++-------+----+---------+--------+
+| name  | id | address | income |
++-------+----+---------+--------+
+| Sayam |  2 | Delhi   |  30000 |
+| Rama  |  7 | Delhi   |  40000 |
++-------+----+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where name like '___a';
++------+----+---------+--------+
+| name | id | address | income |
++------+----+---------+--------+
+| Rama |  7 | Delhi   |  40000 |
++------+----+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where name like 'a_';
+Empty set (0.00 sec)
+
+mysql> select * from employee where name like '_a_';
++------+----+---------+--------+
+| name | id | address | income |
++------+----+---------+--------+
+| Ram  |  1 | Hyd     |  50000 |
+| Yam  |  3 | Chennai |  35000 |
++------+----+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where name like '%a_';
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Kamran |  4 | Mumbai  |  30000 |
++--------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table student (id int not null primary key,
+    -> name varchar(40),
+    -> class int,
+    -> age int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student values (1,'Guru',6,12),(3,'Yama_Raj',7,13),(5,'Raj',8,14),(8,'Jay',9,15),(9,'Van',10,16);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++----+----------+-------+------+
+| id | name     | class | age  |
++----+----------+-------+------+
+|  1 | Guru     |     6 |   12 |
+|  3 | Yama_Raj |     7 |   13 |
+|  5 | Raj      |     8 |   14 |
+|  8 | Jay      |     9 |   15 |
+|  9 | Van      |    10 |   16 |
++----+----------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  25000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee inner join student on employee.id = student.id;
++-------+----+---------+--------+----+----------+-------+------+
+| name  | id | address | income | id | name     | class | age  |
++-------+----+---------+--------+----+----------+-------+------+
+| Ram   |  1 | Hyd     |  50000 |  1 | Guru     |     6 |   12 |
+| Yam   |  3 | Chennai |  35000 |  3 | Yama_Raj |     7 |   13 |
+| Anmol |  5 | Bng     |  25000 |  5 | Raj      |     8 |   14 |
++-------+----+---------+--------+----+----------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee left join student on employee.id = student.id;
++--------+----+---------+--------+------+----------+-------+------+
+| name   | id | address | income | id   | name     | class | age  |
++--------+----+---------+--------+------+----------+-------+------+
+| Ram    |  1 | Hyd     |  50000 |    1 | Guru     |     6 |   12 |
+| Sayam  |  2 | Delhi   |  30000 | NULL | NULL     |  NULL | NULL |
+| Yam    |  3 | Chennai |  35000 |    3 | Yama_Raj |     7 |   13 |
+| Kamran |  4 | Mumbai  |  30000 | NULL | NULL     |  NULL | NULL |
+| Anmol  |  5 | Bng     |  25000 |    5 | Raj      |     8 |   14 |
+| Rama   |  7 | Delhi   |  40000 | NULL | NULL     |  NULL | NULL |
++--------+----+---------+--------+------+----------+-------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee right join student on employee.id = student.id;
++-------+------+---------+--------+----+----------+-------+------+
+| name  | id   | address | income | id | name     | class | age  |
++-------+------+---------+--------+----+----------+-------+------+
+| Ram   |    1 | Hyd     |  50000 |  1 | Guru     |     6 |   12 |
+| Yam   |    3 | Chennai |  35000 |  3 | Yama_Raj |     7 |   13 |
+| Anmol |    5 | Bng     |  25000 |  5 | Raj      |     8 |   14 |
+| NULL  | NULL | NULL    |   NULL |  8 | Jay      |     9 |   15 |
+| NULL  | NULL | NULL    |   NULL |  9 | Van      |    10 |   16 |
++-------+------+---------+--------+----+----------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student right join employee on student.id = employee.id;
++------+----------+-------+------+--------+----+---------+--------+
+| id   | name     | class | age  | name   | id | address | income |
++------+----------+-------+------+--------+----+---------+--------+
+|    1 | Guru     |     6 |   12 | Ram    |  1 | Hyd     |  50000 |
+| NULL | NULL     |  NULL | NULL | Sayam  |  2 | Delhi   |  30000 |
+|    3 | Yama_Raj |     7 |   13 | Yam    |  3 | Chennai |  35000 |
+| NULL | NULL     |  NULL | NULL | Kamran |  4 | Mumbai  |  30000 |
+|    5 | Raj      |     8 |   14 | Anmol  |  5 | Bng     |  25000 |
+| NULL | NULL     |  NULL | NULL | Rama   |  7 | Delhi   |  40000 |
++------+----------+-------+------+--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student left join employee on student.id = employee.id;
++----+----------+-------+------+-------+------+---------+--------+
+| id | name     | class | age  | name  | id   | address | income |
++----+----------+-------+------+-------+------+---------+--------+
+|  1 | Guru     |     6 |   12 | Ram   |    1 | Hyd     |  50000 |
+|  3 | Yama_Raj |     7 |   13 | Yam   |    3 | Chennai |  35000 |
+|  5 | Raj      |     8 |   14 | Anmol |    5 | Bng     |  25000 |
+|  8 | Jay      |     9 |   15 | NULL  | NULL | NULL    |   NULL |
+|  9 | Van      |    10 |   16 | NULL  | NULL | NULL    |   NULL |
++----+----------+-------+------+-------+------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee cross join student on employee.id = student.id;
++-------+----+---------+--------+----+----------+-------+------+
+| name  | id | address | income | id | name     | class | age  |
++-------+----+---------+--------+----+----------+-------+------+
+| Ram   |  1 | Hyd     |  50000 |  1 | Guru     |     6 |   12 |
+| Yam   |  3 | Chennai |  35000 |  3 | Yama_Raj |     7 |   13 |
+| Anmol |  5 | Bng     |  25000 |  5 | Raj      |     8 |   14 |
++-------+----+---------+--------+----+----------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++----+----------+-------+------+
+| id | name     | class | age  |
++----+----------+-------+------+
+|  1 | Guru     |     6 |   12 |
+|  3 | Yama_Raj |     7 |   13 |
+|  5 | Raj      |     8 |   14 |
+|  8 | Jay      |     9 |   15 |
+|  9 | Van      |    10 |   16 |
++----+----------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----+---------+--------+
+| name   | id | address | income |
++--------+----+---------+--------+
+| Ram    |  1 | Hyd     |  50000 |
+| Sayam  |  2 | Delhi   |  30000 |
+| Yam    |  3 | Chennai |  35000 |
+| Kamran |  4 | Mumbai  |  30000 |
+| Anmol  |  5 | Bng     |  25000 |
+| Rama   |  7 | Delhi   |  40000 |
++--------+----+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee cross join student;
++--------+----+---------+--------+----+----------+-------+------+
+| name   | id | address | income | id | name     | class | age  |
++--------+----+---------+--------+----+----------+-------+------+
+| Ram    |  1 | Hyd     |  50000 |  9 | Van      |    10 |   16 |
+| Ram    |  1 | Hyd     |  50000 |  8 | Jay      |     9 |   15 |
+| Ram    |  1 | Hyd     |  50000 |  5 | Raj      |     8 |   14 |
+| Ram    |  1 | Hyd     |  50000 |  3 | Yama_Raj |     7 |   13 |
+| Ram    |  1 | Hyd     |  50000 |  1 | Guru     |     6 |   12 |
+| Sayam  |  2 | Delhi   |  30000 |  9 | Van      |    10 |   16 |
+| Sayam  |  2 | Delhi   |  30000 |  8 | Jay      |     9 |   15 |
+| Sayam  |  2 | Delhi   |  30000 |  5 | Raj      |     8 |   14 |
+| Sayam  |  2 | Delhi   |  30000 |  3 | Yama_Raj |     7 |   13 |
+| Sayam  |  2 | Delhi   |  30000 |  1 | Guru     |     6 |   12 |
+| Yam    |  3 | Chennai |  35000 |  9 | Van      |    10 |   16 |
+| Yam    |  3 | Chennai |  35000 |  8 | Jay      |     9 |   15 |
+| Yam    |  3 | Chennai |  35000 |  5 | Raj      |     8 |   14 |
+| Yam    |  3 | Chennai |  35000 |  3 | Yama_Raj |     7 |   13 |
+| Yam    |  3 | Chennai |  35000 |  1 | Guru     |     6 |   12 |
+| Kamran |  4 | Mumbai  |  30000 |  9 | Van      |    10 |   16 |
+| Kamran |  4 | Mumbai  |  30000 |  8 | Jay      |     9 |   15 |
+| Kamran |  4 | Mumbai  |  30000 |  5 | Raj      |     8 |   14 |
+| Kamran |  4 | Mumbai  |  30000 |  3 | Yama_Raj |     7 |   13 |
+| Kamran |  4 | Mumbai  |  30000 |  1 | Guru     |     6 |   12 |
+| Anmol  |  5 | Bng     |  25000 |  9 | Van      |    10 |   16 |
+| Anmol  |  5 | Bng     |  25000 |  8 | Jay      |     9 |   15 |
+| Anmol  |  5 | Bng     |  25000 |  5 | Raj      |     8 |   14 |
+| Anmol  |  5 | Bng     |  25000 |  3 | Yama_Raj |     7 |   13 |
+| Anmol  |  5 | Bng     |  25000 |  1 | Guru     |     6 |   12 |
+| Rama   |  7 | Delhi   |  40000 |  9 | Van      |    10 |   16 |
+| Rama   |  7 | Delhi   |  40000 |  8 | Jay      |     9 |   15 |
+| Rama   |  7 | Delhi   |  40000 |  5 | Raj      |     8 |   14 |
+| Rama   |  7 | Delhi   |  40000 |  3 | Yama_Raj |     7 |   13 |
+| Rama   |  7 | Delhi   |  40000 |  1 | Guru     |     6 |   12 |
++--------+----+---------+--------+----+----------+-------+------+
+30 rows in set (0.00 sec)
+
+mysql> select * from student inner join employee on student.id = employee.id;
++----+----------+-------+------+-------+----+---------+--------+
+| id | name     | class | age  | name  | id | address | income |
++----+----------+-------+------+-------+----+---------+--------+
+|  1 | Guru     |     6 |   12 | Ram   |  1 | Hyd     |  50000 |
+|  3 | Yama_Raj |     7 |   13 | Yam   |  3 | Chennai |  35000 |
+|  5 | Raj      |     8 |   14 | Anmol |  5 | Bng     |  25000 |
++----+----------+-------+------+-------+----+---------+--------+
